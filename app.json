@@ -1,0 +1,15 @@
+{
+  "pages": ["pages/page10000/page10000","pages/page10001/page10001","pages/page10002/page10002","pages/page10003/page10003","pages/bindCellphone/bindCellphone","pages/advanceSearch/advanceSearch","pages/extensionPage/extensionPage","pages/transferPage/transferPage","pages/transferOrderDetail/transferOrderDetail","pages/transferPaySuccess/transferPaySuccess","pages/userCenter/userCenter","pages/myMessage/myMessage","pages/myIntegral/myIntegral","pages/winningRecord/winningRecord","pages/couponList/couponList","pages/couponListPage/couponListPage","pages/couponDetail/couponDetail","pages/couponReceiveListPage/couponReceiveListPage","pages/vipCard/vipCard","pages/goodsComment/goodsComment","pages/logisticsPage/logisticsPage","pages/orderDetail/orderDetail","pages/goodsDetail/goodsDetail","pages/makeComment/makeComment","pages/myAddress/myAddress","pages/addAddress/addAddress","pages/myOrder/myOrder","pages/tabbarMyOrder/tabbarMyOrder","pages/shoppingCart/shoppingCart","pages/tabbarShoppingCart/tabbarShoppingCart","pages/makeAppointment/makeAppointment","pages/toStoreDetail/toStoreDetail","pages/previewOrderDetail/previewOrderDetail","pages/paySuccess/paySuccess","pages/verificationCodePage/verificationCodePage","pages/tostoreOrderDetail/tostoreOrderDetail","pages/previewGoodsOrder/previewGoodsOrder","pages/goodsAdditionalInfo/goodsAdditionalInfo","pages/goodsOrderDetail/goodsOrderDetail","pages/goodsOrderPaySuccess/goodsOrderPaySuccess","pages/tostoreComment/tostoreComment","pages/makeTostoreComment/makeTostoreComment","pages/appointmentOrderDetail/appointmentOrderDetail","pages/previewAppointmentOrder/previewAppointmentOrder"],
+  "window": {
+    "enablePullDownRefresh": false ,
+    "onReachBottomDistance": "50"
+  },
+    "tabBar": {"borderStyle":"white","color":"#CCCCCC","selectedColor":"#2D2D2D","backgroundColor":"#FFFFFF","list":[{"iconPath":"images/5a23c1e1c5e7f.png","selectedIconPath":"images/5a23c1e1c5ed2.png","text":"超市","pagePath":"pages/page10000/page10000"},{"iconPath":"images/5a23c1e1e7f78.png","selectedIconPath":"images/5a23c1e1e7fc3.png","text":"分类","pagePath":"pages/page10001/page10001"},{"iconPath":"images/5a23c1e20a1cc.png","selectedIconPath":"images/5a23c1e20a217.png","text":"活动","pagePath":"pages/page10002/page10002"},{"iconPath":"images/5a23c1e226e32.png","selectedIconPath":"images/5a23c1e226e88.png","text":"我的","pagePath":"pages/page10003/page10003"}]},
+    "networkTimeout": {
+    "request": 10000,
+    "connectSocket": 10000,
+    "uploadFile": 10000,
+    "downloadFile": 10000
+  },
+  "debug": false
+}

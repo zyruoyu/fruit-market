@@ -1,0 +1,29 @@
+<view class="makeCom-wrap page" id="makeComment">
+  <view class="makeCom-item makeCom-goods-comment" wx:for="{{ goodsInfo }}" wx:key="" wx:for-index="goodsIndex">
+    <view>
+      <image class="makeCom-goods-cover" src="{{ item.cover }}"></image>
+      <textarea data-goods-index="{{ goodsIndex }}" bindinput="commentInput" class="makeCom-textarea" placeholder="写下购买体会为其他小伙伴提供参考" auto-height />
+    </view>
+    <view class="makeCom-pic-container">
+      <view wx:for="{{ submitData.goods[goodsIndex].info.img_arr }}" wx:key="" wx:for-item="imgUrl" class="makeCom-pic-wrap">
+        <image src="{{ imgUrl }}" mode="aspectFit"></image>
+        <label class="makeCom-remove-pic" bindtap="removePic" data-goods-index="{{ goodsIndex }}" data-pic-index="{{ index }}">×</label>
+      </view>
+      <view class="makeCom-upload-pic" bindtap="chooseImage" data-goods-index="{{ goodsIndex }}"><view>＋</view><text>添加图片</text></view>
+    </view>
+    <view class="makeCom-level-container">
+      <label class="makeCom-level-span {{ submitData.goods[goodsIndex].info.level == 1 ? 'active' : '' }}" data-level="1" data-goods-index="{{ goodsIndex }}" bindtap="clickLevelSpan"><label class="ico-moon icon-tostoreGoodComment"></label>好评</label>
+      <label class="makeCom-level-span {{ submitData.goods[goodsIndex].info.level == 2 ? 'active' : '' }}" data-level="2" data-goods-index="{{ goodsIndex }}" bindtap="clickLevelSpan"><label class="ico-moon icon-tostoreMiddleComment"></label>中评</label>
+      <label class="makeCom-level-span {{ submitData.goods[goodsIndex].info.level == 3 ? 'active' : '' }}" data-level="3" data-goods-index="{{ goodsIndex }}" bindtap="clickLevelSpan"><label class="ico-moon icon-tostoreBadComment"></label>差评</label>
+    </view>
+  </view>
+  <view class="makeCom-item" style="padding:10px; line-height:30px;">
+    <view style="font-size:16px;">店铺评分</view>
+    <view>描述相符：<view class="makeCom-mark-container makeCom-fit-score"><label class="ico-moon icon-star{{ submitData.tostore_score >= 1 ? '' : '-empty' }}" data-score="1" bindtap="setTostoreScore"></label><label class="ico-moon icon-star{{ submitData.tostore_score >= 2 ? '' : '-empty' }}" data-score="2" bindtap="setTostoreScore"></label><label class="ico-moon icon-star{{ submitData.tostore_score >= 3 ? '' : '-empty' }}" data-score="3" bindtap="setTostoreScore"></label><label class="ico-moon icon-star{{ submitData.tostore_score >= 4 ? '' : '-empty' }}" data-score="4" bindtap="setTostoreScore"></label><label class="ico-moon icon-star{{ submitData.tostore_score >= 5 ? '' : '-empty' }}" data-score="5" bindtap="setTostoreScore"></label></view></view>
+    <view>店铺环境：<view class="makeCom-mark-container makeCom-logistics-score"><label class="ico-moon icon-star{{ submitData.tostore_environment_score >= 1 ? '' : '-empty' }}" data-score="1" bindtap="setTostoreEnvironmentScore"></label><label class="ico-moon icon-star{{ submitData.tostore_environment_score >= 2 ? '' : '-empty' }}" data-score="2" bindtap="setTostoreEnvironmentScore"></label><label class="ico-moon icon-star{{ submitData.tostore_environment_score >= 3 ? '' : '-empty' }}" data-score="3" bindtap="setTostoreEnvironmentScore"></label><label class="ico-moon icon-star{{ submitData.tostore_environment_score >= 4 ? '' : '-empty' }}" data-score="4" bindtap="setTostoreEnvironmentScore"></label><label class="ico-moon icon-star{{ submitData.tostore_environment_score >= 5 ? '' : '-empty' }}" data-score="5" bindtap="setTostoreEnvironmentScore"></label></view></view>
+    <view>商家服务：<view class="makeCom-mark-container makeCom-logistics-score"><label class="ico-moon icon-star{{ submitData.tostore_seller_serve_score >= 1 ? '' : '-empty' }}" data-score="1" bindtap="setTostoreSellerServeScore"></label><label class="ico-moon icon-star{{ submitData.tostore_seller_serve_score >= 2 ? '' : '-empty' }}" data-score="2" bindtap="setTostoreSellerServeScore"></label><label class="ico-moon icon-star{{ submitData.tostore_seller_serve_score >= 3 ? '' : '-empty' }}" data-score="3" bindtap="setTostoreSellerServeScore"></label><label class="ico-moon icon-star{{ submitData.tostore_seller_serve_score >= 4 ? '' : '-empty' }}" data-score="4" bindtap="setTostoreSellerServeScore"></label><label class="ico-moon icon-star{{ submitData.tostore_seller_serve_score >= 5 ? '' : '-empty' }}" data-score="5" bindtap="setTostoreSellerServeScore"></label></view></view>
+  </view>
+  <view class="makeCom-bottom-nav" bindtap="makeComment"><label class="makeCom-make-comment btn btn-orange">发表评价</label></view>
+</view>
+
+

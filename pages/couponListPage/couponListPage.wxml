@@ -1,0 +1,34 @@
+<view class="goods-coupon-list page">
+  <view class="franchisee-goods-coupon-container">
+    <view class="coupon_ticket" wx:if="{{item.type==0}}" wx:for="{{franchiseeInfo.coupon_list}}" wx:key="" data-id="{{item.id}}" bindtap="turnToCouponDetail">
+      <view class="ticket-wrap">
+        <view class="price">￥<span>{{item.value}}</span></view>
+        <view class="coupon_right">
+          <view class="coupon_name">{{item.title}}</view>
+          <view>消费满{{item.condition}}元减{{item.value}}</view>
+          <view>{{item.start_use_date}}至{{item.end_use_date}}</view>
+        </view>
+      </view>
+    </view>
+    <view class="coupon_ticket" wx:if="{{item.type==1}}" wx:for="{{franchiseeInfo.coupon_list}}" wx:key="" data-id="{{item.id}}" bindtap="turnToCouponDetail">
+      <view class="ticket-wrap">
+        <view class="price"><span>{{item.value}}折</span></view>
+        <view class="coupon_right">
+          <view class="coupon_name">{{item.title}}</view>
+          <view>打{{item.value}}折优惠</view>
+          <view>{{item.start_use_date}}至{{item.end_use_date}}</view>q
+        </view>
+      </view>
+    </view>
+    <view class="coupon_ticket" wx:if="{{item.type==2}}" wx:for="{{franchiseeInfo.coupon_list}}" wx:key="" data-id="{{item.id}}" bindtap="turnToCouponDetail">
+      <view class="ticket-wrap">
+        <view class="price">￥<span>{{item.value}}</span></view>
+        <view class="coupon_right">
+          <view class="coupon_name">{{item.title}}</view>
+          <view>可抵扣{{item.value}}元</view>
+          <view>{{item.start_use_date}}至{{item.end_use_date}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

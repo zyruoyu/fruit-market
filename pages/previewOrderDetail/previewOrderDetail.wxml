@@ -1,0 +1,166 @@
+<view class="previewOrder-wrap page" id="previewOrder">
+  <block wx:for="{{ goodsList }}" wx:for-item="goods" wx:for-index="goodsIndex" wx:key="">
+    <view class="previewOrder-goods-list previewOrder-section">
+      <view class="previewOrder-goods-item">
+        <image class="list-goods-cover" src="{{ goods.cover }}" mode="aspectFill"></image>
+        <view class="list-goods-content">
+          <view class="list-goods-title">{{ goods.title }}</view>
+          <view wx:if="{{ goods.model_value_str }}" class="list-goods-model">{{ goods.model_value_str }}</view>
+          <view class="list-goods-price">¥ {{ goods.price }}</view>
+        </view>
+        <view class="list-goods-right" style="top:13px;">
+          <view class="quantity">
+            <label class="minus"></label>
+            <text class="buy-goods-count">{{ goods.num }}</text>
+            <label class="plus"></label>
+            <view class="response-area response-area-minus" data-index="{{ goodsIndex }}" catchtap="clickMinusButton"></view>
+            <view class="response-area response-area-plus" data-index="{{ goodsIndex }}" catchtap="clickPlusButton"></view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </block>
+  <view class="previewOrder-goods-list previewOrder-section" wx:if="{{ exchangeCouponData.hasSelectGoods }}">
+    <view class="previewOrder-goods-item">
+      <image class="list-goods-cover" src="{{ exchangeCouponData.goodsInfo.cover }}" mode="aspectFill"></image>
+      <view class="list-goods-content">
+        <view class="list-goods-title">{{ exchangeCouponData.goodsInfo.title }}</view>
+        <view wx:if="{{ exchangeCouponData.goodsInfo.model_value_str }}" class="list-goods-model">{{ exchangeCouponData.goodsInfo.model_value_str }}</view>
+        <view class="list-goods-price">
+          <view class="gift-text">赠品</view>
+        </view>
+        <view class="list-goods-right" style="top:13px;">
+          <view class="quantity">
+            <text>数量：</text>
+            <text class="buy-goods-count">1</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="previewOrder-section">
+    <view class="previewOrder-section-title">备注:</view>
+    <textarea bindinput="remarkInput" style="border: none;"></textarea>
+    <text style="background-color:#e9e7e8;display:block;font-size:12px;text-align:right;padding-right:4px;color:{{remarkColor || 'black'}};">{{remarkLength || 0}}/30</text>
+  </view>
+  <view class="previewOrder-section">
+    <view wx:if="{{shopInfo.used_tostore_type == 2}}">
+      <view class="options-group">
+        <view class="options-item-left" catchtap="chooseWayOfDine" data-way="1">
+          <view class="options-item-circle {{ wayOfDine == 1 ? 'selected' : '' }}"></view>
+          <view>{{ shopInfo.tostore_type[0].name || '点餐'}}</view>
+        </view>
+        <view class="options-item-right" catchtap="chooseWayOfDine" data-way="2">
+          <view class="options-item-circle {{ wayOfDine == 2 ? 'selected' : '' }}"></view>
+          <view>{{ shopInfo.tostore_type[1].name || '预约'}}</view>
+        </view>
+        <view class="options-group-crossband"></view>
+      </view>
+    </view>
+    <block wx:for="{{shopInfo.tostore_type}}" wx:key="">
+      <view wx:if="{{shopInfo.used_tostore_type != 2 && item.tostore_order_type == 2 && item.use == 1 && wayOfDine == 2}}"><view class="options-item-circle selected" style="display:inline-block;vertical-align:middle;margin-right:5px;"></view>{{item.name}}</view>
+      <view wx:if="{{shopInfo.used_tostore_type != 2 && item.tostore_order_type == 1 && item.use == 1 && wayOfDine == 1}}"><view class="options-item-circle selected" style="display:inline-block;vertical-align:middle;margin-right:5px;"></view>{{item.name}}</view>
+      <view wx:if="{{item.tostore_order_type == 2 && item.use == 1 && wayOfDine == 2}}">
+        <view style="font-size:12px;color:#ffcc01;margin: 3px 0;">{{businesssTimeString}}</view>
+        <view class="previewOrder-time-picker">
+          <picker mode="time" start="{{ optionalTimeStart }}" end="{{ optionalTimeEnd }}" value="{{appointmentTime}}" bindchange="bindTimeChange">
+            <view class="picker">
+              {{ appointmentTime || '请点击选择到店时间' }}
+            </view>
+          </picker>
+        </view>
+      </view>
+      <view class="previewOrder-section-location" wx:if="{{location_data_arr && item.tostore_order_type == 1 && item.use == 1 && wayOfDine == 1}}">
+      <view style="text-align:left;margin-bottom:10px;">{{ shopInfo.project_title }}:</view>
+      <view style="color:#919191;font-size: 13px;">
+        <radio-group style="display:inline-block;" bindchange="radioLocationChange">
+          <label class="radio" wx:if="{{isUrlLocationId}}" style="margin-right:10px;">
+              <radio checked="{{changeValue == 2}}" value="2" color="#ff7100" />{{locationTitle}}
+          </label>
+          <label class="radio" style="margin-right:10px;">
+              <radio checked="{{changeValue == 0}}" value="0" color="#ff7100" />自取
+          </label>
+          <label class="radio" style="margin-right:10px;">
+              <radio value="1" checked="{{changeValue == 1}}" color="#ff7100" />换位置
+          </label>
+        </radio-group>
+        <view class="location-section">
+          <picker bindchange="bindLocationChange" value="{{index}}" range="{{location_data_arr}}" range-key="{{'title'}}" style="overflow:hidden;width:34px;white-space:nowrap;padding:0 5px;">
+            <view class="picker">
+              {{ locationNum || '请选择' }}
+            </view>
+          </picker>
+        </view>
+      </view>
+    </view>
+    </block>
+  </view>
+  <view class="previewOrder-section" bindtap="showDiscount" wx:if="{{ discountList.length }}">
+    <view class="previewOrder-section-title">优惠方式:
+      <view class="ico-moon icon-rightarrow"></view>
+    </view>
+    <picker bindchange="discountChange" value="{{ selectDiscountIndex }}" range="{{ discountList }}" range-key="title" style="margin-bottom:-12rpx;">
+      <view class="select-discount-title">{{ selectDiscountInfo.name }}<text class="pull-right" hidden="{{ selectDiscountIndex == 0 }}">- ¥ {{ discount_cut_price }}</text></view>
+    </picker>
+  </view>
+  <view class="previewOrder-section" wx:if="{{ balance != 0 }}">
+    <view class="use-balance-option">
+      <text>使用储值金</text>
+      <switch class="pull-right" checked="true" bindchange="useBalanceChange" color="#ff7100" />
+    </view>
+    <view hidden="{{ !useBalance }}" class="select-discount-title" style="margin-top:9px;margin-bottom:-12rpx;">储值金抵现
+      <text class="pull-right">- ¥ {{ deduction }}</text>
+    </view>
+  </view>
+  <view class="previewOrder-section">
+    <view class="previewOrder-section-title">手机号码{{shopInfo.is_phone == 1 ? '(必填)' : ''}}: </view>
+    <input type="number" placeholder="请输入11位手机号码" bindinput="inputPhone" value="{{ phone }}"></input>
+  </view>
+  <form report-submit="true" bindsubmit="confirmPayment">
+    <button formType="submit" class="previewOrder-pay-btn">确认支付 ¥ {{ totalPayment }}</button>
+  </form>
+  <template name="exchangeCouponUseDialog">
+    <view id="tostorePayDialog" class="page-dialog-wrap page-addshoppingcart-dialog" hidden="{{ dialogHidden }}">
+      <view class="page-bottom-dialog" style="padding-bottom: 65px;">
+        <view class="page-bottom-content">
+          <view class="pay-close-dialog page-dialog-close" bindtap="exchangeCouponHideDialog">×</view>
+          <view class="dialog-block-item">
+            <view class="thumb">
+              <view class="thumb-wrap">
+                <image class="pay-goods-cover" src="{{ selectModelInfo.imgurl || goodsInfo.cover }}"></image>
+              </view>
+            </view>
+            <view class="pay-goods-baseinfo">
+              <view class="pay-goods-title ellipsis" style="text-align: left;">
+                <text>{{ goodsInfo.title }}</text>
+                <text class="gift-text">赠品</text>
+              </view>
+              <view wx:if="{{selectModelInfo.models_text}}" class="pay-checked-text clearfix">已选：{{ selectModelInfo.models_text }}</view>
+            </view>
+          </view>
+          <view class="dialog-block-item" hidden="{{ !goodsInfo.model_items.length }}">
+            <view class="pay-goods-models" scroll-y="true">
+              <view wx:for="{{ goodsInfo.model }}" wx:key="" wx:for-item="model" wx:for-index="modelIndex">
+                <text style="vertical-align:top;float: left;margin-top: 5px;width:120rpx;display:inline-block;text-align:right;font-size:24rpx;">{{ model.name }}：</text>
+                <label class="pills-list" style="text-align:center;max-width:528rpx;">
+                <label wx:for="{{ model.subModelName }}"
+                     wx:for-item="name"
+                     wx:key=""
+                     data-model-index="{{ modelIndex }}"
+                     data-submodel-index="{{ index }}"
+                     class="subModel {{ selectModelInfo.models[modelIndex] == model.subModelId[index] ? 'select' : '' }}"
+                     data-submodel-id="{{ model.subModelId[index] }}" bindtap="exchangeCouponSelectSubModel">{{ name }}</label>
+                </label>
+              </view>
+            </view>
+          </view>
+          <view class="toStore-bottom-nav" style="background-color:#3f3f3f;">
+            <view class="bottom-nav-detail"></view>
+            <view class="bottom-nav-ready" bindtap="exchangeCouponConfirmGoods">选好了</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </template>
+  <template is="exchangeCouponUseDialog" data="{{ ...exchangeCouponData }}"></template>
+</view>
